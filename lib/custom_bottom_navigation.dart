@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:flutter_navigationbar_31/cubit/navindex_cubit.dart';
 import 'package:flutter_navigationbar_31/home_screen.dart';
 import 'package:flutter_navigationbar_31/messages_screen.dart';
 import 'package:flutter_navigationbar_31/notifications_screen.dart';
@@ -16,20 +19,21 @@ class _CustomBottomNavigationState extends State<CustomBottomNavigation> {
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
-   
-      body: <Widget>[
-        /// Home page
-        const HomeScreen(),
-        const NotificationsScreen(),
-        const MessagesScreen(),
-      ][currentPageIndex],
-    
-      bottomNavigationBar: NavigationBar(
+    //final navindexCubit = context.watch<NavindexCubit>();
+
+    return NavigationBar(
         onDestinationSelected: (int index) {
-          setState(() {
-            currentPageIndex = index;
-          });
+
+          context.read<NavindexCubit>().setIndex(index);
+          currentPageIndex = context.read<NavindexCubit>().state;
+
+          if (index == 0) {
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => const HomeScreen()));
+          } else if (index == 1) {
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => const NotificationsScreen()));
+          } else if (index == 2) {
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => const MessagesScreen()));
+          }  
         },
         indicatorColor: Colors.amber,
         selectedIndex: currentPageIndex,
@@ -51,7 +55,6 @@ class _CustomBottomNavigationState extends State<CustomBottomNavigation> {
             label: 'Messages',
           ),
         ],
-      ),
-    );
+      );
   }
 }

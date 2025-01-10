@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_navigationbar_31/cubit/navindex_cubit.dart';
+
+import 'custom_bottom_navigation.dart';
 
 class NotificationsScreen extends StatelessWidget {
   const NotificationsScreen({super.key});
@@ -10,12 +14,14 @@ class NotificationsScreen extends StatelessWidget {
         title: const Text('notifictions appbar'),
         centerTitle: true,
       ),
-      body: const Center(
-        child: Text('notifications'),
+      body: BlocBuilder<NavindexCubit, int>(
+        builder: (context, state) {
+          return Center(
+            child: Text(state.toString()),
+          );
+        },
       ),
-
-      //bottomNavigationBar: const CustomBottomNavigation(),
-
+      bottomNavigationBar: const CustomBottomNavigation(),
     );
   }
 }
