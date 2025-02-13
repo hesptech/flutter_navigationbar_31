@@ -33,10 +33,10 @@ class _CustomBottomNavigationState extends State<CustomBottomNavigation> {
             Navigator.of(context).push(MaterialPageRoute(builder: (context) => const NotificationsScreen()));
           } else if (index == 2) {
             Navigator.of(context).push(MaterialPageRoute(builder: (context) => const MessagesScreen()));
-          }  
+          }
         },
         indicatorColor: Colors.amber,
-        selectedIndex: currentPageIndex,
+        selectedIndex: context.read<NavindexCubit>().state,
         destinations: const <Widget>[
           NavigationDestination(
             selectedIcon: Icon(Icons.home),
@@ -44,13 +44,15 @@ class _CustomBottomNavigationState extends State<CustomBottomNavigation> {
             label: 'Home',
           ),
           NavigationDestination(
-            icon: Badge(child: Icon(Icons.notifications_sharp)),
+            selectedIcon: Icon(Icons.notifications_sharp),
+            icon: Badge(child: Icon(Icons.notifications_outlined)),
             label: 'Notifications',
           ),
           NavigationDestination(
+            selectedIcon: Icon(Icons.messenger_sharp),
             icon: Badge(
               label: Text('2'),
-              child: Icon(Icons.messenger_sharp),
+              child: Icon(Icons.message_outlined),
             ),
             label: 'Messages',
           ),
